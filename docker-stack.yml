@@ -1,0 +1,96 @@
+# CivicSense on Docker Swarm:  docker stack deploy -c docker-stack.yml civicsense
+# Build the image first with "docker compose build". nginx is published on port 8088.
+#
+# The same image as docker-compose.yml, but run as replicated swarm services:
+#   web   - 3 replicas behind the swarm's virtual IP, rolling updates, self-healing
+#   nginx - 2 replicas published through the ingress routing mesh on port 8088
+#   db    - 1 replica pinned to the manager node (it owns the data volume)
+# The stack is called "civicsense" like the Compose project, so its volumes
+# (civicsense_mysql_data, ...) are the ones docker compose created and the data carries over.
+services:
+  db:
+    image: mysql:8.4
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: civicsense
+      MYSQL_USER: civic
+      MYSQL_PASSWORD: civic
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks: [civicnet]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    deploy:
+      replicas: 1
+      placement:
+        constraints: ["node.role == manager"]
+      restart_policy: {condition: on-failure}
+
+  web:
+    image: civicsense-web:latest   # built by "docker compose build" (project name civicsense)
+    environment:
+      DJANGO_SECRET_KEY: swarm-demo-key
+      DJANGO_DEBUG: "0"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,web,nginx
+      DJANGO_CSRF_TRUSTED_ORIGINS: http://localhost,http://127.0.0.1
+      DB_ENGINE: mysql
+      DB_NAME: civicsense
+      DB_USER: civic
+      DB_PASSWORD: civic
+      DB_HOST: db
+      DB_PORT: "3306"
+      SEED_DEMO_DATA: "0"          # seeding is a one-off task, never part of a restart
+    volumes:
+      - static_files:/app/staticfiles
+      - media_files:/app/media
+    networks: [civicnet]
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1             # one replica at a time
+        delay: 10s
+        order: start-first         # new task healthy before the old one stops
+        failure_action: rollback
+        monitor: 30s
+      rollback_config:
+        parallelism: 1
+        order: start-first
+      restart_policy:
+        condition: any
+        delay: 5s
+      resources:
+        limits: {cpus: "0.50", memory: 512M}
+        reservations: {cpus: "0.10", memory: 128M}
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - "8088:80"                  # ingress routing mesh
+    configs:
+      - source: nginx_conf
+        target: /etc/nginx/conf.d/default.conf
+    volumes:
+      - static_files:/app/staticfiles:ro
+      - media_files:/app/media:ro
+    networks: [civicnet]
+    deploy:
+      replicas: 2
+      restart_policy: {condition: any}
+
+networks:
+  civicnet:
+    driver: overlay
+    attachable: true               # lets one-off "docker run" tasks join it
+
+volumes:
+  mysql_data:
+  static_files:
+  media_files:
+
+configs:
+  nginx_conf:
+    file: ./docker/nginx.conf

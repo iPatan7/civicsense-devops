@@ -1,0 +1,17 @@
+# Migrations run once per release as a Job, before the new pods start serving.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: civicsense-migrate
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: ghcr.io/example/civicsense:latest
+          command: ["python", "manage.py", "migrate", "--no-input"]
+          envFrom:
+            - configMapRef: {name: civicsense-config}
+            - secretRef: {name: civicsense-secret}

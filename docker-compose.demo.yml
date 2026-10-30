@@ -1,0 +1,12 @@
+# Use this when port 8080 is already taken on your machine (for example by Jenkins):
+#
+#   docker compose -f docker-compose.yml -f docker-compose.demo.yml up -d
+#
+# The portal is then at http://localhost:8088
+services:
+  web:
+    environment:
+      DJANGO_CSRF_TRUSTED_ORIGINS: http://localhost:8088,http://127.0.0.1:8088
+  nginx:
+    ports: !override
+      - "8088:80"

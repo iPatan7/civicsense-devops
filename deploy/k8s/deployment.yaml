@@ -1,0 +1,65 @@
+# Three stateless replicas of the Django application.  Because every request
+# is stateless (the session lives in the database) the pods can be added or
+# removed at any time, which is what makes horizontal scaling possible.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: civicsense-web
+  labels: {app: civicsense}
+spec:
+  replicas: 3
+  selector:
+    matchLabels: {app: civicsense}
+  strategy:
+    type: RollingUpdate            # no downtime while a new version rolls out
+    rollingUpdate: {maxSurge: 1, maxUnavailable: 0}
+  template:
+    metadata:
+      labels: {app: civicsense}
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/example/civicsense:latest
+          ports: [{containerPort: 8000}]
+          envFrom:
+            - configMapRef: {name: civicsense-config}
+            - secretRef: {name: civicsense-secret}
+          readinessProbe:
+            httpGet: {path: /healthz, port: 8000}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: {path: /healthz, port: 8000}
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests: {cpu: "150m", memory: "256Mi"}
+            limits:   {cpu: "700m", memory: "768Mi"}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: civicsense-web
+spec:
+  selector: {app: civicsense}
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: civicsense-web
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: civicsense-web
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: {type: Utilization, averageUtilization: 70}

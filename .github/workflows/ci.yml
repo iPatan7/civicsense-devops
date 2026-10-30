@@ -1,0 +1,83 @@
+# Continuous integration for CivicSense.
+#
+# Every push runs the same three steps a reviewer would run by hand: the Django
+# system checks, the test suite against a real MySQL 8 service, and a Docker
+# build, so a broken image can never reach the registry.
+name: CivicSense CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: civicsense
+          MYSQL_USER: civic
+          MYSQL_PASSWORD: civic
+          MYSQL_ROOT_PASSWORD: rootpass
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -prootpass"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install system and Python dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-libmysqlclient-dev pkg-config
+          pip install -r requirements.txt
+          pip install flake8
+
+      - name: Lint (style only, no failing build on warnings)
+        run: flake8 --max-line-length=100 --exclude=migrations . || true
+
+      - name: Django system checks
+        env:
+          DJANGO_SECRET_KEY: ci-secret
+          DJANGO_DEBUG: "0"
+          DJANGO_ALLOWED_HOSTS: localhost
+        run: python manage.py check --deploy --fail-level ERROR
+
+      - name: Run the test suite against MySQL
+        env:
+          DJANGO_SECRET_KEY: ci-secret
+          DB_ENGINE: mysql
+          DB_NAME: civicsense
+          DB_USER: root
+          DB_PASSWORD: rootpass
+          DB_HOST: 127.0.0.1
+          DB_PORT: "3306"
+        run: python manage.py test --verbosity 2
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the production image
+        run: docker build -t civicsense:${{ github.sha }} .
+      - name: Smoke-test the image
+        run: |
+          docker run -d --name civic-smoke -p 8000:8000 \
+            -e DJANGO_SECRET_KEY=smoke -e DJANGO_ALLOWED_HOSTS='*' \
+            civicsense:${{ github.sha }}
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:8000/healthz; then exit 0; fi
+            sleep 2
+          done
+          docker logs civic-smoke
+          exit 1

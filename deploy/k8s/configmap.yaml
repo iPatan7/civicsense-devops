@@ -1,0 +1,14 @@
+# Non-secret configuration of the deployment.  The image is identical in every
+# environment; only this ConfigMap and the Secret change.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: civicsense-config
+data:
+  DJANGO_DEBUG: "0"
+  DJANGO_ALLOWED_HOSTS: "civicsense.example.gov.in,localhost"
+  DJANGO_CSRF_TRUSTED_ORIGINS: "https://civicsense.example.gov.in"
+  DB_ENGINE: "mysql"
+  DB_NAME: "civicsense"
+  DB_HOST: "civicsense-mysql"
+  DB_PORT: "3306"
