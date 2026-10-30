@@ -66,17 +66,36 @@
     if (data.similar && data.similar.length) {
       box.classList.remove("d-none");
       data.similar.forEach(function (item) {
+        // Titles come from other citizens, so everything is set as text, never as HTML.
         var wrapper = document.createElement("div");
         wrapper.className = "duplicate-item";
-        var distance = item.distance_m === null ? "" : " &middot; " + item.distance_m + " m away";
-        wrapper.innerHTML =
-          '<div class="d-flex justify-content-between">' +
-          '<a href="' + item.url + '" target="_blank">' + item.tracking_id + "</a>" +
-          '<span class="badge chip ' + (item.is_duplicate ? "sla-breached" : "category") +
-          '">' + item.similarity + "% match</span></div>" +
-          "<div>" + item.title + "</div>" +
-          '<div class="text-muted">' + item.status + distance +
-          " &middot; " + item.supports + " citizen(s) reporting</div>";
+
+        var header = document.createElement("div");
+        header.className = "d-flex justify-content-between";
+        var link = document.createElement("a");
+        link.textContent = item.tracking_id;
+        if (typeof item.url === "string" && item.url.charAt(0) === "/" && item.url.charAt(1) !== "/") {
+          link.href = item.url;
+          link.target = "_blank";
+          link.rel = "noopener";
+        }
+        var badge = document.createElement("span");
+        badge.className = "badge chip " + (item.is_duplicate ? "sla-breached" : "category");
+        badge.textContent = item.similarity + "% match";
+        header.appendChild(link);
+        header.appendChild(badge);
+
+        var title = document.createElement("div");
+        title.textContent = item.title;
+
+        var meta = document.createElement("div");
+        meta.className = "text-muted";
+        var distance = item.distance_m === null ? "" : " · " + item.distance_m + " m away";
+        meta.textContent = item.status + distance + " · " + item.supports + " citizen(s) reporting";
+
+        wrapper.appendChild(header);
+        wrapper.appendChild(title);
+        wrapper.appendChild(meta);
         list.appendChild(wrapper);
       });
     } else {
