@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}{{ complaint.tracking_id }}{% endblock %}
+{% block content %}
+
+{% if complaint.duplicate_of %}
+<div class="alert alert-warning">
+  <i class="bi bi-diagram-3"></i> This complaint was merged into
+  <a href="{{ complaint.duplicate_of.get_absolute_url }}" class="fw-semibold">{{ complaint.duplicate_of.tracking_id }}</a>,
+  which reported the same problem first (similarity {{ complaint.duplicate_score|floatformat:2 }}).
+  Follow that complaint for updates.
+</div>
+{% endif %}
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between flex-wrap gap-2">
+          <div>
+            <div class="text-muted small">{{ complaint.tracking_id }} &middot;
+              filed {{ complaint.created_at|date:"d M Y, h:i A" }} by
+              {{ complaint.citizen.get_full_name|default:complaint.citizen.username }}</div>
+            <h1 class="h4 mt-1">{{ complaint.title }}</h1>
+          </div>
+          <div class="text-end">{% include "_badges.html" %}</div>
+        </div>
+
+        <p class="mt-3">{{ complaint.description|linebreaksbr }}</p>
+
+        <div class="row row-cols-2 row-cols-md-4 g-3 mt-1">
+          <div><div class="meta-label">Department</div>
+            <div>{{ complaint.department.name|default:"Not routed yet" }}</div></div>
+          <div><div class="meta-label">Category</div>
+            <div>{{ complaint.category.name|default:"Unclassified" }}</div></div>
+          <div><div class="meta-label">Ward</div>
+            <div>{{ complaint.ward.name|default:"-" }}</div></div>
+          <div><div class="meta-label">Due by</div>
+            <div>{{ complaint.due_at|date:"d M Y, h:i A"|default:"-" }}</div></div>
+        </div>
+
+        {% if complaint.address or complaint.landmark %}
+          <p class="small text-muted mt-3 mb-0"><i class="bi bi-geo-alt"></i>
+            {{ complaint.address }}{% if complaint.landmark %}, near {{ complaint.landmark }}{% endif %}
+            {% if complaint.latitude %}({{ complaint.latitude }}, {{ complaint.longitude }}){% endif %}</p>
+        {% endif %}
+
+        {% if complaint.attachments.all %}
+          <div class="d-flex gap-2 flex-wrap mt-3">
+            {% for attachment in complaint.attachments.all %}
+              <a href="{{ attachment.image.url }}" target="_blank" class="badge chip">
+                <i class="bi bi-paperclip"></i> Photo {{ forloop.counter }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <h2 class="h5 mt-4 mb-3">Progress</h2>
+    <ul class="timeline">
+      {% for update in updates %}
+        <li>
+          <div class="d-flex justify-content-between">
+            <span class="fw-semibold">
+              {% if update.to_status %}{{ update.get_to_status_display|default:update.to_status }}{% else %}Update{% endif %}</span>
+            <span class="small text-muted">{{ update.created_at|date:"d M Y, h:i A" }}</span>
+          </div>
+          <div class="small">{{ update.note }}</div>
+          {% if update.actor %}<div class="small text-muted">by {{ update.actor.get_username }}</div>{% endif %}
+        </li>
+      {% empty %}<li class="text-muted">No updates yet.</li>{% endfor %}
+    </ul>
+
+    {% if can_review %}
+      <div class="card mt-4">
+        <div class="card-body">
+          <h2 class="h6">Rate the service</h2>
+          <form method="post" action="{% url 'complaints:feedback' complaint.tracking_id %}">
+            {% csrf_token %}
+            <div class="row g-2">
+              <div class="col-md-4">{{ feedback_form.rating }}</div>
+              <div class="col-md-8">{{ feedback_form.comment }}</div>
+            </div>
+            <button class="btn btn-outline-primary mt-3">Submit rating</button>
+            <div class="form-text">A rating of 1 or 2 stars reopens the complaint
+              automatically.</div>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header"><i class="bi bi-cpu"></i> How this was classified</div>
+      <div class="card-body small">
+        <p class="mb-2">Predicted category <b>{{ complaint.ai_category_code|default:"-" }}</b>
+          with {{ complaint.ai_confidence|floatformat:2 }} confidence
+          {% if complaint.category_corrected %}
+            <span class="badge chip status-rejected">corrected by an officer</span>
+          {% endif %}
+        </p>
+        {% if complaint.ai_keywords %}
+          <p class="mb-2">Decisive words:
+            {% for keyword in complaint.ai_keywords %}<span class="badge chip category">{{ keyword }}</span> {% endfor %}</p>
+        {% endif %}
+        <p class="mb-2">Tone: <b>{{ complaint.sentiment_label|default:"-" }}</b>
+          (polarity {{ complaint.sentiment_polarity }}),
+          urgency {{ complaint.urgency_score }}</p>
+        <hr>
+        <p class="mb-1 fw-semibold">Priority {{ complaint.priority }} -
+          score {{ complaint.priority_score|floatformat:0 }}/100</p>
+        <ul class="mb-2 ps-3">
+          {% for reason in complaint.priority_reasons %}<li>{{ reason }}</li>{% endfor %}
+        </ul>
+        {% if complaint.priority_breakdown %}
+          <div class="breakdown">
+            {% for part, value in complaint.priority_breakdown.items %}
+              <div class="d-flex justify-content-between"><span>{{ part }}</span><span>{{ value }}</span></div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if not is_owner and user.is_authenticated and complaint.is_open %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h2 class="h6">Do you have the same problem?</h2>
+          <form method="post" action="{% url 'complaints:support' complaint.tracking_id %}">
+            {% csrf_token %}
+            {{ support_form.comment }}
+            <button class="btn btn-primary w-100 mt-2" {% if has_supported %}disabled{% endif %}>
+              <i class="bi bi-hand-thumbs-up"></i>
+              {% if has_supported %}You already confirmed this{% else %}I have the same problem{% endif %}
+            </button>
+          </form>
+          <p class="small text-muted mt-2 mb-0">Confirmations raise the
+            corroboration part of the priority score, so the crew is sent sooner.</p>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if duplicates %}
+      <div class="card mb-3">
+        <div class="card-header"><i class="bi bi-diagram-3"></i> Reported again by others</div>
+        <ul class="list-group list-group-flush small">
+          {% for duplicate in duplicates %}
+            <li class="list-group-item">
+              <a href="{{ duplicate.get_absolute_url }}">{{ duplicate.tracking_id }}</a>
+              &middot; {{ duplicate.created_at|date:"d M" }}
+              &middot; similarity {{ duplicate.duplicate_score|floatformat:2 }}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if is_authority %}
+      <a class="btn btn-outline-dark w-100" href="{% url 'dashboard:detail' complaint.tracking_id %}">
+        <i class="bi bi-tools"></i> Open in authority dashboard</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

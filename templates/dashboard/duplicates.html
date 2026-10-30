@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Duplicate clusters{% endblock %}
+{% block body_class %}authority{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h1 class="h4 mb-0">Duplicate clusters</h1>
+    <p class="text-muted small mb-0">{{ merged }} complaint(s) were merged into an
+      existing report - {{ saved_percent }}% of everything received. That is the
+      duplicated work the departments never had to do.</p>
+  </div>
+  <a class="btn btn-outline-dark" href="{% url 'dashboard:index' %}">Dashboard</a>
+</div>
+
+{% for cluster in clusters %}
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>
+        <a class="fw-semibold" href="{% url 'dashboard:detail' cluster.parent.tracking_id %}">
+          {{ cluster.parent.tracking_id }}</a> &middot; {{ cluster.parent.title|truncatechars:70 }}
+      </span>
+      <span>
+        <span class="badge chip prio-{{ cluster.parent.priority|lower }}">{{ cluster.parent.priority }}
+          {{ cluster.parent.priority_score|floatformat:0 }}</span>
+        <span class="badge chip supports"><i class="bi bi-people-fill"></i>
+          {{ cluster.parent.support_count }}</span>
+      </span>
+    </div>
+    <ul class="list-group list-group-flush">
+      {% for child in cluster.children %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div>
+            <a href="{% url 'dashboard:detail' child.tracking_id %}">{{ child.tracking_id }}</a>
+            <span class="small">- {{ child.title|truncatechars:70 }}</span>
+            <div class="small text-muted">{{ child.citizen.get_username }} &middot;
+              {{ child.created_at|date:"d M Y, h:i A" }} &middot;
+              similarity {{ child.duplicate_score|floatformat:2 }}</div>
+          </div>
+          <form method="post" action="{% url 'dashboard:unmerge' child.tracking_id %}">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-danger">Separate</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% empty %}
+  <p class="text-muted">No duplicate cluster has been formed yet.</p>
+{% endfor %}
+{% include "_pagination.html" %}
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Reports{% endblock %}
+{% block body_class %}authority{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 mb-0">Reports</h1>
+  <a class="btn btn-outline-dark" href="{% url 'dashboard:index' %}">Dashboard</a>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-3"><div class="kpi"><div class="kpi-value">{{ metrics.resolution_rate }}%</div>
+    <div class="kpi-label">Complaints resolved</div></div></div>
+  <div class="col-md-3"><div class="kpi"><div class="kpi-value">{{ metrics.avg_resolution_hours }}h</div>
+    <div class="kpi-label">Average resolution time</div></div></div>
+  <div class="col-md-3"><div class="kpi"><div class="kpi-value">{{ metrics.duplicate_rate }}%</div>
+    <div class="kpi-label">Duplicates detected</div></div></div>
+  <div class="col-md-3"><div class="kpi"><div class="kpi-value">
+    {% if accuracy is not None %}{{ accuracy }}%{% else %}-{% endif %}</div>
+    <div class="kpi-label">Classifier accuracy</div></div></div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">SLA performance by department</div>
+  <div class="table-responsive">
+    <table class="table mb-0">
+      <thead><tr><th>Department</th><th class="text-end">Total</th><th class="text-end">Open</th>
+        <th class="text-end">Overdue</th><th class="text-end">Resolved</th>
+        <th class="text-end">Within SLA</th></tr></thead>
+      <tbody>
+        {% for row in sla_rows %}
+          <tr>
+            <td>{{ row.department }}</td>
+            <td class="text-end">{{ row.total }}</td>
+            <td class="text-end">{{ row.open }}</td>
+            <td class="text-end {% if row.overdue %}text-danger fw-semibold{% endif %}">{{ row.overdue }}</td>
+            <td class="text-end">{{ row.resolved }}</td>
+            <td class="text-end">
+              <div class="progress" style="height:14px">
+                <div class="progress-bar {% if row.sla_percent < 60 %}bg-danger{% elif row.sla_percent < 85 %}bg-warning{% else %}bg-success{% endif %}"
+                     style="width: {{ row.sla_percent }}%"></div>
+              </div>
+              <span class="small">{{ row.sla_percent }}%</span>
+            </td>
+          </tr>
+        {% empty %}<tr><td colspan="6" class="text-muted">No data yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">Ward-wise load</div>
+      <div class="table-responsive">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>Ward</th><th class="text-end">Total</th><th class="text-end">Open</th>
+            <th class="text-end">Overdue</th><th class="text-end">Duplicates</th></tr></thead>
+          <tbody>
+            {% for row in ward_rows %}
+              <tr><td>{{ row.ward__code }} - {{ row.ward__name }}</td>
+                <td class="text-end">{{ row.total }}</td>
+                <td class="text-end">{{ row.open }}</td>
+                <td class="text-end">{{ row.overdue }}</td>
+                <td class="text-end">{{ row.duplicates }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">Classification quality by category</div>
+      <div class="table-responsive">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>Category</th><th class="text-end">Complaints</th>
+            <th class="text-end">Corrected by officers</th></tr></thead>
+          <tbody>
+            {% for row in category_rows %}
+              <tr><td>{{ row.category__name }}</td>
+                <td class="text-end">{{ row.total }}</td>
+                <td class="text-end">{{ row.corrected }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">Complaints received (last 30 days)</div>
+  <div class="card-body"><canvas id="trendChart" height="90"></canvas></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script id="charts-data" type="application/json">{{ charts_json|safe }}</script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

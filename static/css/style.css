@@ -1,0 +1,94 @@
+/* CivicSense - a small theme on top of Bootstrap 5.
+   Government portals must stay readable on cheap screens, so the palette is
+   high contrast and the priority colours are also distinguishable by their
+   text label, never by colour alone. */
+
+:root {
+  --civic-blue: #12395f;
+  --civic-blue-dark: #0d2942;
+  --civic-accent: #0d6efd;
+  --critical: #b3261e;
+  --high: #c25e00;
+  --medium: #1a73e8;
+  --low: #5f6368;
+  --ok: #1e7e34;
+  --surface: #f5f7fa;
+}
+
+body { background: var(--surface); color: #1c1f23; }
+body.authority { background: #eef1f6; }
+
+.civic-navbar { background: var(--civic-blue); }
+.civic-navbar .navbar-brand { letter-spacing: .3px; }
+.brand-sub { font-size: .78rem; opacity: .7; font-weight: 400; margin-left: .4rem; }
+.civic-footer { background: var(--civic-blue-dark); color: #cfd8e3; }
+
+.hero {
+  background: linear-gradient(135deg, var(--civic-blue) 0%, #1d5a8f 100%);
+  color: #fff;
+}
+.hero .card { color: #1c1f23; }
+
+/* --- statistics ------------------------------------------------------- */
+.stat-card, .kpi {
+  background: #fff; border: 1px solid #e3e8ef; border-radius: .6rem;
+  padding: 1rem 1.1rem; height: 100%;
+}
+.stat-value, .kpi-value { font-size: 1.7rem; font-weight: 600; line-height: 1.1; }
+.stat-label, .kpi-label { font-size: .8rem; color: #5f6368; margin-top: .25rem; }
+.kpi-danger  { border-left: 4px solid var(--critical); }
+.kpi-warning { border-left: 4px solid var(--high); }
+.kpi-success { border-left: 4px solid var(--ok); }
+
+/* --- chips ------------------------------------------------------------ */
+.chip { font-weight: 500; border-radius: 999px; padding: .35em .7em; font-size: .72rem; }
+.prio-critical { background: #fdecea; color: var(--critical); border: 1px solid #f3b7b2; }
+.prio-high     { background: #fff1e2; color: var(--high);     border: 1px solid #f5cfa4; }
+.prio-medium   { background: #e8f0fe; color: var(--medium);   border: 1px solid #b9d1fb; }
+.prio-low      { background: #eef0f2; color: var(--low);      border: 1px solid #d6dade; }
+
+.status-new         { background: #eef0f2; color: #3c4043; border: 1px solid #d6dade; }
+.status-triaged     { background: #e8f0fe; color: #174ea6; border: 1px solid #b9d1fb; }
+.status-assigned    { background: #e6f4ea; color: #137333; border: 1px solid #b7dfc4; }
+.status-in_progress { background: #fef7e0; color: #8a6100; border: 1px solid #f5df9c; }
+.status-resolved    { background: #e6f4ea; color: #137333; border: 1px solid #b7dfc4; }
+.status-closed      { background: #eef0f2; color: #3c4043; border: 1px solid #d6dade; }
+.status-rejected    { background: #fdecea; color: var(--critical); border: 1px solid #f3b7b2; }
+.status-duplicate   { background: #f3e8fd; color: #6f2da8; border: 1px solid #dcc4f5; }
+
+.sla-breached { background: var(--critical); color: #fff; }
+.sla-due      { background: #fff1e2; color: var(--high); border: 1px solid #f5cfa4; }
+.supports     { background: #e8f0fe; color: #174ea6; border: 1px solid #b9d1fb; }
+.category     { background: #fff; color: #3c4043; border: 1px solid #d6dade; }
+
+/* --- lists and tables -------------------------------------------------- */
+.complaint-row { background: #fff; border: 1px solid #e3e8ef; border-radius: .5rem;
+                 padding: .85rem 1rem; margin-bottom: .6rem; }
+.meta-label { font-size: .72rem; text-transform: uppercase; color: #5f6368;
+              letter-spacing: .04em; }
+.queue-table tbody tr.row-breached { background: #fff6f5; }
+.queue-table tbody tr.row-critical { background: #fffaf3; }
+.score-pill { display: inline-block; min-width: 42px; text-align: center;
+              border-radius: .4rem; padding: .3rem .1rem; font-weight: 600; }
+
+/* --- timeline ---------------------------------------------------------- */
+.timeline { list-style: none; padding-left: 1.4rem; margin: 0;
+            border-left: 2px solid #d6dade; }
+.timeline li { position: relative; padding: 0 0 1rem 1rem; }
+.timeline li::before {
+  content: ""; position: absolute; left: -1.42rem; top: .35rem;
+  width: .7rem; height: .7rem; border-radius: 50%;
+  background: #fff; border: 2px solid var(--civic-accent);
+}
+
+/* --- live assistant ---------------------------------------------------- */
+.assistant .card-header { background: var(--civic-blue); color: #fff; font-size: .9rem; }
+.assistant .duplicate-item { border: 1px solid #e3e8ef; border-radius: .4rem;
+                             padding: .5rem .6rem; margin-top: .4rem; font-size: .82rem; }
+.breakdown { font-size: .78rem; background: #f8f9fb; border-radius: .4rem;
+             padding: .5rem .6rem; }
+
+@media print {
+  .civic-navbar, .civic-footer, form button, .btn { display: none !important; }
+  body, body.authority { background: #fff; }
+}

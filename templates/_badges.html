@@ -1,0 +1,12 @@
+{% comment %}Small include: priority + status + SLA chips for one complaint.{% endcomment %}
+<span class="badge chip prio-{{ complaint.priority|lower }}">{{ complaint.get_priority_display }}
+  <span class="opacity-75">{{ complaint.priority_score|floatformat:0 }}</span></span>
+<span class="badge chip status-{{ complaint.status|lower }}">{{ complaint.get_status_display }}</span>
+{% if complaint.sla_state == 'breached' %}
+  <span class="badge chip sla-breached"><i class="bi bi-alarm"></i> SLA breached</span>
+{% elif complaint.sla_state == 'due-soon' %}
+  <span class="badge chip sla-due"><i class="bi bi-hourglass-split"></i> Due soon</span>
+{% endif %}
+{% if complaint.support_count %}
+  <span class="badge chip supports"><i class="bi bi-people-fill"></i> {{ complaint.support_count }} also reported</span>
+{% endif %}

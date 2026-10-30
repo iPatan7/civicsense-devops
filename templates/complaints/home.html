@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block main_class %}{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="container py-5">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7">
+        <h1 class="display-6 fw-bold mb-3">Report a civic problem.<br>
+          The system routes it, ranks it and tracks it.</h1>
+        <p class="lead mb-4">Every complaint is read by an NLP engine that finds the
+          right department, checks whether somebody has already reported the same
+          problem, and decides how urgent it is - before any clerk sees it.</p>
+        <a href="{% url 'complaints:file_complaint' %}" class="btn btn-light btn-lg me-2">
+          <i class="bi bi-pencil-square"></i> File a complaint</a>
+        <a href="{% url 'complaints:browse' %}" class="btn btn-outline-light btn-lg">
+          See what the city reported</a>
+      </div>
+      <div class="col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 text-uppercase text-muted">Track a complaint</h2>
+            <form method="get" action="{% url 'complaints:track' %}" class="d-flex gap-2 mt-3">
+              {{ track_form.tracking_id }}
+              <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+            </form>
+            <p class="small text-muted mt-2 mb-0">No login needed - just the id printed
+              on your receipt, e.g. CIV-2026-7KQ4X2.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container py-4">
+  <div class="row g-3 stat-row">
+    <div class="col-6 col-lg-3"><div class="stat-card">
+      <div class="stat-value">{{ metrics.total }}</div><div class="stat-label">Complaints received</div></div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card">
+      <div class="stat-value">{{ metrics.resolution_rate }}%</div><div class="stat-label">Resolved</div></div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card">
+      <div class="stat-value">{{ metrics.duplicates }}</div><div class="stat-label">Duplicates merged automatically</div></div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card">
+      <div class="stat-value">{{ metrics.avg_resolution_hours }} h</div><div class="stat-label">Average resolution time</div></div></div>
+  </div>
+
+  <div class="row mt-5 g-4">
+    <div class="col-lg-7">
+      <h2 class="h5 mb-3">Latest complaints in the city</h2>
+      {% for complaint in recent %}
+        <div class="complaint-row">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <a class="fw-semibold" href="{{ complaint.get_absolute_url }}">{{ complaint.title }}</a>
+              <div class="small text-muted">{{ complaint.tracking_id }} &middot;
+                {{ complaint.category.name|default:"Being classified" }} &middot;
+                {{ complaint.ward.name|default:"City" }} &middot;
+                {{ complaint.created_at|timesince }} ago</div>
+            </div>
+            <div class="text-end">{% include "_badges.html" %}</div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">No complaints yet. Be the first to report a problem.</p>
+      {% endfor %}
+    </div>
+
+    <div class="col-lg-5">
+      <h2 class="h5 mb-3">Highest priority right now</h2>
+      <div class="list-group mb-4">
+        {% for complaint in top_priority %}
+          <a class="list-group-item list-group-item-action" href="{{ complaint.get_absolute_url }}">
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">{{ complaint.title|truncatechars:52 }}</span>
+              <span class="badge chip prio-{{ complaint.priority|lower }}">{{ complaint.priority }}</span>
+            </div>
+            <div class="small text-muted">Score {{ complaint.priority_score|floatformat:0 }}/100
+              &middot; {{ complaint.support_count }} citizen(s) reporting</div>
+          </a>
+        {% empty %}<div class="list-group-item text-muted">Nothing pending.</div>{% endfor %}
+      </div>
+
+      <h2 class="h5 mb-3">Services covered</h2>
+      <div class="d-flex flex-wrap gap-2">
+        {% for category in categories %}
+          <span class="badge chip category"><i class="bi {{ category.icon }}"></i>
+            {{ category.name }} <span class="opacity-75">{{ category.total }}</span></span>
+        {% endfor %}
+      </div>
+      <p class="small text-muted mt-3">{{ departments }} departments &middot; {{ wards }} wards
+        &middot; complaints are classified into these services automatically.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

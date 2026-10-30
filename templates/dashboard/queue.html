@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Work queue{% endblock %}
+{% block body_class %}authority{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h1 class="h4 mb-0">Work queue</h1>
+    <p class="text-muted small mb-0">{{ total }} complaint(s) match this filter,
+      ordered by the priority score computed by the engine.</p>
+  </div>
+  <a class="btn btn-outline-dark" href="{% url 'dashboard:index' %}">
+    <i class="bi bi-speedometer2"></i> Dashboard</a>
+</div>
+
+<form class="row g-2 mb-3">
+  <div class="col-md-3">
+    <input class="form-control" name="q" value="{{ filters.q }}" placeholder="Search id, title, street">
+  </div>
+  <div class="col-6 col-md-2">
+    <select class="form-select" name="status">
+      <option value="">Any status</option>
+      <option value="open" {% if filters.status == 'open' %}selected{% endif %}>Open only</option>
+      {% for value, label in statuses %}
+        <option value="{{ value }}" {% if filters.status == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-6 col-md-2">
+    <select class="form-select" name="priority">
+      <option value="">Any priority</option>
+      {% for value, label in priorities %}
+        <option value="{{ value }}" {% if filters.priority == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-6 col-md-2">
+    <select class="form-select" name="category">
+      <option value="">Any category</option>
+      {% for category in categories %}
+        <option value="{{ category.code }}" {% if filters.category == category.code %}selected{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-6 col-md-2">
+    <select class="form-select" name="ward">
+      <option value="">Any ward</option>
+      {% for ward in wards %}
+        <option value="{{ ward.code }}" {% if filters.ward == ward.code %}selected{% endif %}>{{ ward }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-6 col-md-2">
+    <select class="form-select" name="sla">
+      <option value="">Any SLA state</option>
+      <option value="breached" {% if filters.sla == 'breached' %}selected{% endif %}>SLA breached</option>
+      <option value="unassigned" {% if filters.sla == 'unassigned' %}selected{% endif %}>Unassigned</option>
+    </select>
+  </div>
+  <div class="col-6 col-md-2">
+    <select class="form-select" name="sort">
+      <option value="priority" {% if filters.sort == 'priority' %}selected{% endif %}>Priority score</option>
+      <option value="due" {% if filters.sort == 'due' %}selected{% endif %}>Due date</option>
+      <option value="oldest" {% if filters.sort == 'oldest' %}selected{% endif %}>Oldest first</option>
+      <option value="newest" {% if filters.sort == 'newest' %}selected{% endif %}>Newest first</option>
+      <option value="supports" {% if filters.sort == 'supports' %}selected{% endif %}>Most reported</option>
+    </select>
+  </div>
+  <div class="col-md-2 d-grid"><button class="btn btn-primary">Apply</button></div>
+  <div class="col-md-2 d-grid"><a class="btn btn-outline-secondary" href="{% url 'dashboard:queue' %}">Reset</a></div>
+</form>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle queue-table">
+    <thead>
+      <tr><th style="width:70px">Score</th><th>Complaint</th><th>Category</th>
+        <th>Ward</th><th>Status</th><th>Assigned</th><th>Due</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for complaint in page_obj %}
+        <tr class="{% if complaint.sla_state == 'breached' %}row-breached{% elif complaint.priority == 'CRITICAL' %}row-critical{% endif %}">
+          <td><span class="score-pill prio-{{ complaint.priority|lower }}">
+            {{ complaint.priority_score|floatformat:0 }}</span></td>
+          <td>
+            <a class="fw-semibold" href="{% url 'dashboard:detail' complaint.tracking_id %}">{{ complaint.title|truncatechars:64 }}</a>
+            <div class="small text-muted">{{ complaint.tracking_id }} &middot;
+              {{ complaint.created_at|timesince }} old
+              {% if complaint.support_count %}&middot;
+                <i class="bi bi-people-fill"></i> {{ complaint.support_count }} reports{% endif %}
+              {% if complaint.category_corrected %}&middot; <span class="text-warning-emphasis">reclassified</span>{% endif %}
+            </div>
+          </td>
+          <td class="small">{{ complaint.category.name|default:"-" }}<br>
+            <span class="text-muted">{{ complaint.department.name|default:"" }}</span></td>
+          <td class="small">{{ complaint.ward.code|default:"-" }}</td>
+          <td><span class="badge chip status-{{ complaint.status|lower }}">{{ complaint.get_status_display }}</span></td>
+          <td class="small">{{ complaint.assigned_to.get_username|default:"-" }}</td>
+          <td class="small {% if complaint.sla_state == 'breached' %}text-danger fw-semibold{% endif %}">
+            {% if complaint.due_at %}{{ complaint.due_at|date:"d M, h:i A" }}{% else %}-{% endif %}</td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'dashboard:detail' complaint.tracking_id %}">Act</a></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="8" class="text-center text-muted py-4">Nothing in the queue for this filter.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% include "_pagination.html" %}
+{% endblock %}

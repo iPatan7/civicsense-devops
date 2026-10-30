@@ -1,0 +1,14 @@
+# --- Core framework -------------------------------------------------------
+Django>=5.2                 # tested on Django 5.2 LTS and 6.1
+                            # note: Django 6.x needs MySQL 8.4+, Django 5.2 works on MySQL 8.0
+mysqlclient>=2.2.4          # MySQL 8 driver (used when DB_ENGINE=mysql)
+python-dotenv>=1.0.1        # reads the .env file in development
+
+# --- Production serving ---------------------------------------------------
+gunicorn>=22.0.0            # WSGI application server used inside Docker
+whitenoise>=6.7.0           # serves the collected static files
+
+# NOTE: the NLP engine (tokeniser, stemmer, TF-IDF, Naive Bayes, cosine
+# similarity, sentiment lexicon) is written from scratch in nlpengine/ using
+# only the Python standard library, so no NLTK / scikit-learn download is
+# needed for the experiment to run offline.

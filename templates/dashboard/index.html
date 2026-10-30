@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Authority dashboard{% endblock %}
+{% block body_class %}authority{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+  <div>
+    <h1 class="h4 mb-0">Authority dashboard</h1>
+    <p class="text-muted small mb-0">Live picture of the city
+      {% if profile.role == 'STAFF' and profile.department %}&middot;
+        {{ profile.department.name }} only{% endif %}</p>
+  </div>
+  <div class="btn-group">
+    <a class="btn btn-outline-dark" href="{% url 'dashboard:queue' %}"><i class="bi bi-list-task"></i> Work queue</a>
+    <a class="btn btn-outline-dark" href="{% url 'dashboard:duplicates' %}"><i class="bi bi-diagram-3"></i> Duplicates</a>
+    <a class="btn btn-outline-dark" href="{% url 'dashboard:reports' %}"><i class="bi bi-graph-up"></i> Reports</a>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-6 col-lg-2"><div class="kpi">
+    <div class="kpi-value">{{ metrics.total }}</div><div class="kpi-label">Total complaints</div></div></div>
+  <div class="col-6 col-lg-2"><div class="kpi">
+    <div class="kpi-value">{{ metrics.open }}</div><div class="kpi-label">Open</div></div></div>
+  <div class="col-6 col-lg-2"><div class="kpi kpi-danger">
+    <div class="kpi-value">{{ metrics.overdue }}</div><div class="kpi-label">SLA breached</div></div></div>
+  <div class="col-6 col-lg-2"><div class="kpi kpi-warning">
+    <div class="kpi-value">{{ metrics.critical }}</div><div class="kpi-label">Critical open</div></div></div>
+  <div class="col-6 col-lg-2"><div class="kpi kpi-success">
+    <div class="kpi-value">{{ metrics.resolution_rate }}%</div><div class="kpi-label">Resolved</div></div></div>
+  <div class="col-6 col-lg-2"><div class="kpi">
+    <div class="kpi-value">{{ metrics.avg_resolution_hours }}h</div><div class="kpi-label">Avg. resolution</div></div></div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-8">
+    <div class="card h-100">
+      <div class="card-header">Complaints received in the last 14 days</div>
+      <div class="card-body"><canvas id="trendChart" height="110"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card h-100">
+      <div class="card-header">Status mix</div>
+      <div class="card-body"><canvas id="statusChart" height="180"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">Complaints by category</div>
+      <div class="card-body"><canvas id="categoryChart" height="200"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">Priority distribution</div>
+      <div class="card-body"><canvas id="priorityChart" height="200"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header text-danger"><i class="bi bi-exclamation-octagon"></i>
+        Critical complaints waiting</div>
+      <div class="list-group list-group-flush">
+        {% for complaint in critical %}
+          <a class="list-group-item list-group-item-action" href="{% url 'dashboard:detail' complaint.tracking_id %}">
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">{{ complaint.title|truncatechars:60 }}</span>
+              <span class="badge chip prio-critical">{{ complaint.priority_score|floatformat:0 }}</span>
+            </div>
+            <div class="small text-muted">{{ complaint.tracking_id }} &middot;
+              {{ complaint.category.name|default:"-" }} &middot;
+              {{ complaint.ward.name|default:"-" }} &middot;
+              {% if complaint.is_overdue %}<span class="text-danger">overdue by
+                {{ complaint.due_at|timesince }}</span>{% else %}due in
+                {{ complaint.due_at|timeuntil }}{% endif %}</div>
+          </a>
+        {% empty %}<div class="list-group-item text-muted">No critical complaint pending.</div>{% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header text-warning-emphasis"><i class="bi bi-alarm"></i>
+        Oldest SLA breaches</div>
+      <div class="list-group list-group-flush">
+        {% for complaint in overdue %}
+          <a class="list-group-item list-group-item-action" href="{% url 'dashboard:detail' complaint.tracking_id %}">
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">{{ complaint.title|truncatechars:60 }}</span>
+              <span class="badge chip sla-breached">{{ complaint.due_at|timesince }} late</span>
+            </div>
+            <div class="small text-muted">{{ complaint.tracking_id }} &middot;
+              {{ complaint.department.name|default:"unassigned department" }}</div>
+          </a>
+        {% empty %}<div class="list-group-item text-muted">Everything is within SLA.</div>{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-7">
+    <div class="card h-100">
+      <div class="card-header">Ward hot-spots</div>
+      <div class="table-responsive">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>Ward</th><th class="text-end">Complaints</th><th class="text-end">Overdue</th></tr></thead>
+          <tbody>
+            {% for row in wards %}
+              <tr><td>{{ row.ward__code }} - {{ row.ward__name }}</td>
+                <td class="text-end">{{ row.count }}</td>
+                <td class="text-end {% if row.overdue %}text-danger fw-semibold{% endif %}">{{ row.overdue }}</td></tr>
+            {% empty %}<tr><td colspan="3" class="text-muted">No ward data.</td></tr>{% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card h-100">
+      <div class="card-header">Engine health</div>
+      <div class="card-body small">
+        <div class="d-flex justify-content-between py-1">
+          <span>Auto-categorised complaints</span><b>{{ metrics.auto_classified }}</b></div>
+        <div class="d-flex justify-content-between py-1">
+          <span>Categories corrected by officers</span><b>{{ metrics.corrections }}</b></div>
+        <div class="d-flex justify-content-between py-1">
+          <span>Classifier accuracy (reviewed complaints)</span>
+          <b>{% if accuracy is not None %}{{ accuracy }}%{% else %}not enough reviews{% endif %}</b></div>
+        <div class="d-flex justify-content-between py-1">
+          <span>Duplicates merged</span><b>{{ metrics.duplicates }} ({{ metrics.duplicate_rate }}%)</b></div>
+        <div class="d-flex justify-content-between py-1">
+          <span>Unassigned open complaints</span><b>{{ unassigned }}</b></div>
+        <div class="d-flex justify-content-between py-1">
+          <span>Average citizen rating</span><b>{{ metrics.avg_rating }}/5</b></div>
+        <a class="btn btn-sm btn-outline-secondary w-100 mt-3" href="{% url 'dashboard:duplicates' %}">
+          Review duplicate clusters</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script id="charts-data" type="application/json">{{ charts_json|safe }}</script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

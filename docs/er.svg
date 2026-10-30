@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1250 790" width="1250" height="790" font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif">
+<rect width="1250" height="790" fill="#ffffff"/>
+<defs><marker id="dot" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5"><circle cx="3.5" cy="3.5" r="2.6" fill="#5f6368"/></marker></defs>
+<line x1="257.0" y1="92.5" x2="297.0" y2="77.7" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="388.7" y1="175.5" x2="447.2" y2="235.0" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="680.2" y1="160.0" x2="598.0" y2="235.0" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="1117.5" y1="144.5" x2="1117.5" y2="185.0" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="1000.0" y1="267.8" x2="665.0" y2="287.8" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="330.0" y1="270.2" x2="233.0" y2="294.8" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="330.0" y1="393.4" x2="233.0" y2="429.0" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="330.0" y1="534.2" x2="233.0" y2="599.0" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="665.0" y1="358.2" x2="700.0" y2="375.2" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<line x1="665.0" y1="534.2" x2="700.0" y2="566.4" stroke="#8a929c" stroke-width="1.4" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<rect x="25" y="25" width="232" height="135.0" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="25" y="25" width="232" height="26" rx="6" fill="#12395f"/>
+<rect x="25" y="45" width="232" height="6" fill="#12395f"/>
+<text x="35" y="42.5" font-size="12.5" font-weight="600" fill="#ffffff">DEPARTMENT</text>
+<text x="35" y="70.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="35" y="85.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    name</text>
+<text x="35" y="101.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#1e7e34" font-weight="600" xml:space="preserve">UK  code</text>
+<text x="35" y="116.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    email, phone</text>
+<text x="35" y="132.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    head_name</text>
+<text x="35" y="147.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    is_active</text>
+<rect x="297" y="25" width="262" height="150.5" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="297" y="25" width="262" height="26" rx="6" fill="#12395f"/>
+<rect x="297" y="45" width="262" height="6" fill="#12395f"/>
+<text x="307" y="42.5" font-size="12.5" font-weight="600" fill="#ffffff">CATEGORY</text>
+<text x="307" y="70.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="307" y="85.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#1e7e34" font-weight="600" xml:space="preserve">UK  code            (NLP label)</text>
+<text x="307" y="101.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    name</text>
+<text x="307" y="116.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  department_id</text>
+<text x="307" y="132.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    severity  0.0 - 1.0</text>
+<text x="307" y="147.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    sla_hours</text>
+<text x="307" y="163.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    is_active</text>
+<rect x="599" y="25" width="232" height="135.0" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="599" y="25" width="232" height="26" rx="6" fill="#12395f"/>
+<rect x="599" y="45" width="232" height="6" fill="#12395f"/>
+<text x="609" y="42.5" font-size="12.5" font-weight="600" fill="#ffffff">WARD</text>
+<text x="609" y="70.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="609" y="85.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#1e7e34" font-weight="600" xml:space="preserve">UK  code</text>
+<text x="609" y="101.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    name, zone</text>
+<text x="609" y="116.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    latitude, longitude</text>
+<text x="609" y="132.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    population</text>
+<text x="609" y="147.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    councillor</text>
+<rect x="1000" y="25" width="235" height="119.5" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="1000" y="25" width="235" height="26" rx="6" fill="#12395f"/>
+<rect x="1000" y="45" width="235" height="6" fill="#12395f"/>
+<text x="1010" y="42.5" font-size="12.5" font-weight="600" fill="#ffffff">USER  (django auth)</text>
+<text x="1010" y="70.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="1010" y="85.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#1e7e34" font-weight="600" xml:space="preserve">UK  username</text>
+<text x="1010" y="101.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    password  (hashed)</text>
+<text x="1010" y="116.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    email</text>
+<text x="1010" y="132.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    first_name, last_name</text>
+<rect x="1000" y="185" width="235" height="150.5" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="1000" y="185" width="235" height="26" rx="6" fill="#12395f"/>
+<rect x="1000" y="205" width="235" height="6" fill="#12395f"/>
+<text x="1010" y="202.5" font-size="12.5" font-weight="600" fill="#ffffff">PROFILE</text>
+<text x="1010" y="230.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="1010" y="245.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  user_id        1 : 1</text>
+<text x="1010" y="261.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    role  CITIZEN / STAFF /</text>
+<text x="1010" y="276.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">          OFFICER / ADMIN</text>
+<text x="1010" y="292.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  ward_id</text>
+<text x="1010" y="307.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  department_id</text>
+<text x="1010" y="323.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    phone, is_verified</text>
+<rect x="330" y="235" width="335" height="352.0" rx="6" fill="#ffffff" stroke="#0d2942" stroke-width="1.4"/>
+<rect x="330" y="235" width="335" height="26" rx="6" fill="#0d2942"/>
+<rect x="330" y="255" width="335" height="6" fill="#0d2942"/>
+<text x="340" y="252.5" font-size="12.5" font-weight="600" fill="#ffffff">COMPLAINT</text>
+<text x="340" y="280.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="340" y="295.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#1e7e34" font-weight="600" xml:space="preserve">UK  tracking_id</text>
+<text x="340" y="311.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  citizen_id  -> USER</text>
+<text x="340" y="326.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    title, description</text>
+<text x="340" y="342.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  category_id, department_id</text>
+<text x="340" y="357.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  ward_id</text>
+<text x="340" y="373.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    address, latitude, longitude</text>
+<text x="340" y="388.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">--  decided by the NLP engine  --</text>
+<text x="340" y="404.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    ai_category_code, ai_confidence</text>
+<text x="340" y="419.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    ai_keywords            (JSON)</text>
+<text x="340" y="435.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    sentiment_label, polarity</text>
+<text x="340" y="450.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    urgency_score</text>
+<text x="340" y="466.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    priority, priority_score</text>
+<text x="340" y="481.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    priority_breakdown     (JSON)</text>
+<text x="340" y="497.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  duplicate_of_id -> COMPLAINT</text>
+<text x="340" y="512.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    duplicate_score, support_count</text>
+<text x="340" y="528.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">--  workflow  --</text>
+<text x="340" y="543.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    status, source</text>
+<text x="340" y="559.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  assigned_to_id -> USER</text>
+<text x="340" y="574.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    created_at, due_at, resolved_at</text>
+<rect x="25" y="235" width="208" height="119.5" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="25" y="235" width="208" height="26" rx="6" fill="#12395f"/>
+<rect x="25" y="255" width="208" height="6" fill="#12395f"/>
+<text x="35" y="252.5" font-size="12.5" font-weight="600" fill="#ffffff">ATTACHMENT</text>
+<text x="35" y="280.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="35" y="295.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  complaint_id</text>
+<text x="35" y="311.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    image</text>
+<text x="35" y="326.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    caption</text>
+<text x="35" y="342.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    uploaded_at</text>
+<rect x="25" y="375" width="208" height="135.0" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="25" y="375" width="208" height="26" rx="6" fill="#12395f"/>
+<rect x="25" y="395" width="208" height="6" fill="#12395f"/>
+<text x="35" y="392.5" font-size="12.5" font-weight="600" fill="#ffffff">SUPPORT</text>
+<text x="35" y="420.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="35" y="435.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  complaint_id</text>
+<text x="35" y="451.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  user_id</text>
+<text x="35" y="466.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    comment</text>
+<text x="35" y="482.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    created_at</text>
+<text x="35" y="497.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#1e7e34" font-weight="600" xml:space="preserve">UK  (complaint, user)</text>
+<rect x="25" y="545" width="208" height="135.0" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="25" y="545" width="208" height="26" rx="6" fill="#12395f"/>
+<rect x="25" y="565" width="208" height="6" fill="#12395f"/>
+<text x="35" y="562.5" font-size="12.5" font-weight="600" fill="#ffffff">FEEDBACK</text>
+<text x="35" y="590.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="35" y="605.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  complaint_id   1 : 1</text>
+<text x="35" y="621.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    rating   1 - 5</text>
+<text x="35" y="636.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    comment</text>
+<text x="35" y="652.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    sentiment_label</text>
+<text x="35" y="667.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    created_at</text>
+<rect x="700" y="300" width="250" height="150.5" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="700" y="300" width="250" height="26" rx="6" fill="#12395f"/>
+<rect x="700" y="320" width="250" height="6" fill="#12395f"/>
+<text x="710" y="317.5" font-size="12.5" font-weight="600" fill="#ffffff">COMPLAINT_UPDATE</text>
+<text x="710" y="345.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="710" y="360.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  complaint_id</text>
+<text x="710" y="376.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  actor_id -> USER</text>
+<text x="710" y="391.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    from_status, to_status</text>
+<text x="710" y="407.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    note</text>
+<text x="710" y="422.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    is_public</text>
+<text x="710" y="438.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    created_at</text>
+<rect x="700" y="500" width="250" height="166.0" rx="6" fill="#ffffff" stroke="#12395f" stroke-width="1.4"/>
+<rect x="700" y="500" width="250" height="26" rx="6" fill="#12395f"/>
+<rect x="700" y="520" width="250" height="6" fill="#12395f"/>
+<text x="710" y="517.5" font-size="12.5" font-weight="600" fill="#ffffff">TRAINING_SAMPLE</text>
+<text x="710" y="545.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#b3261e" font-weight="600" xml:space="preserve">PK  id</text>
+<text x="710" y="560.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    text</text>
+<text x="710" y="576.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    category_code</text>
+<text x="710" y="591.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    source  CORRECTION /</text>
+<text x="710" y="607.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">            CONFIRMED</text>
+<text x="710" y="622.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  complaint_id</text>
+<text x="710" y="638.0" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#0d6efd" font-weight="600" xml:space="preserve">FK  created_by -> USER</text>
+<text x="710" y="653.5" font-size="10.6" font-family="'Consolas', 'DejaVu Sans Mono', monospace" fill="#3c4043" font-weight="400" xml:space="preserve">    created_at</text>
+<rect x="262.2" y="71.6" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="269.0" y="83.1" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="278.2" y="65.6" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="285.0" y="77.1" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="261.9" y="69.6" width="30.3" height="15.5" rx="3" fill="#ffffff"/><text x="277.0" y="81.1" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">owns</text>
+<rect x="398.8" y="176.1" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="405.5" y="187.6" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="423.6" y="201.4" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="430.4" y="212.9" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="386.2" y="189.8" width="63.7" height="15.5" rx="3" fill="#ffffff"/><text x="418.0" y="201.2" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">classifies</text>
+<rect x="655.7" y="159.7" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="662.5" y="171.2" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="608.9" y="202.3" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="615.7" y="213.8" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="607.3" y="182.0" width="63.7" height="15.5" rx="3" fill="#ffffff"/><text x="639.1" y="193.5" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">located in</text>
+<rect x="1110.7" y="140.2" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="1117.5" y="151.7" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="1110.7" y="156.3" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="1117.5" y="167.8" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="1094.0" y="149.2" width="47.0" height="15.5" rx="3" fill="#ffffff"/><text x="1117.5" y="160.8" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">role of</text>
+<rect x="969.3" y="252.7" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="976.0" y="264.2" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="682.2" y="269.9" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="689.0" y="281.4" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="775.6" y="262.3" width="113.7" height="15.5" rx="3" fill="#ffffff"/><text x="832.5" y="273.8" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">files / is assigned</text>
+<rect x="300.0" y="259.6" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="306.7" y="271.1" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="249.5" y="272.4" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="256.3" y="283.9" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="252.5" y="267.0" width="58.1" height="15.5" rx="3" fill="#ffffff"/><text x="281.5" y="278.5" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">has photo</text>
+<rect x="300.7" y="385.2" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="307.5" y="396.7" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="248.7" y="404.2" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="255.5" y="415.7" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="244.1" y="395.7" width="74.8" height="15.5" rx="3" fill="#ffffff"/><text x="281.5" y="407.2" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">confirmed by</text>
+<rect x="303.3" y="531.0" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="310.0" y="542.5" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="246.2" y="569.2" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="253.0" y="580.7" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="255.2" y="551.1" width="52.5" height="15.5" rx="3" fill="#ffffff"/><text x="281.5" y="562.6" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">rated by</text>
+<rect x="668.7" y="346.8" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="675.5" y="358.3" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="682.7" y="353.6" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="689.5" y="365.1" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="647.9" y="351.2" width="69.2" height="15.5" rx="3" fill="#ffffff"/><text x="682.5" y="362.7" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">audit trail</text>
+<rect x="668.7" y="527.4" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="675.5" y="538.9" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">1</text>
+<rect x="682.7" y="540.2" width="13.6" height="15.5" rx="3" fill="#ffffff"/><text x="689.5" y="551.7" font-size="10.5" fill="#3c4043" text-anchor="middle" font-weight="600">N</text>
+<rect x="659.0" y="534.8" width="47.0" height="15.5" rx="3" fill="#ffffff"/><text x="682.5" y="546.3" font-size="10.5" fill="#0d6efd" text-anchor="middle" font-style="italic">teaches</text>
+<path d="M430.5 587.0 C 430.5 639.0, 537.7 639.0, 537.7 587.0" fill="none" stroke="#c25e00" stroke-width="1.4" stroke-dasharray="5 3" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="484.1" y="639.0" font-size="10.5" fill="#c25e00" text-anchor="middle" font-style="italic">duplicate_of  (a repeat report is merged into the first one)</text>
+<text x="25" y="772" font-size="11" fill="#5f6368">PK primary key &#160;&#160; FK foreign key &#160;&#160; UK unique key &#160;&#160;&#160; a dashed line is the self relation used to merge duplicates</text>
+</svg>

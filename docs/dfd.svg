@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 700" width="1300" height="700" font-family="'Segoe UI', 'DejaVu Sans', Arial, sans-serif">
+<rect width="1300" height="700" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="3.2" orient="auto"><path d="M0,0 L8,3.2 L0,6.4 z" fill="#5f6368"/></marker><marker id="arrowL" markerWidth="9" markerHeight="9" refX="8" refY="3.2" orient="auto"><path d="M0,0 L8,3.2 L0,6.4 z" fill="#c25e00"/></marker></defs>
+<rect x="20" y="160" width="130" height="86" rx="3" fill="#eef1f6" stroke="#12395f" stroke-width="1.6"/>
+<text x="85" y="193" font-size="13" font-weight="600" fill="#12395f" text-anchor="middle">Citizen</text>
+<text x="85" y="211" font-size="10.5" fill="#5f6368" text-anchor="middle">files the</text>
+<text x="85" y="223" font-size="10.5" fill="#5f6368" text-anchor="middle">complaint</text>
+<rect x="20" y="415" width="130" height="86" rx="3" fill="#eef1f6" stroke="#12395f" stroke-width="1.6"/>
+<text x="85" y="448" font-size="13" font-weight="600" fill="#12395f" text-anchor="middle">Citizen</text>
+<text x="85" y="466" font-size="10.5" fill="#5f6368" text-anchor="middle">tracks and rates</text>
+<rect x="1140" y="415" width="150" height="86" rx="3" fill="#eef1f6" stroke="#12395f" stroke-width="1.6"/>
+<text x="1215" y="448" font-size="13" font-weight="600" fill="#12395f" text-anchor="middle">Officer</text>
+<text x="1215" y="466" font-size="10.5" fill="#5f6368" text-anchor="middle">department staff</text>
+<text x="1215" y="478" font-size="10.5" fill="#5f6368" text-anchor="middle">and ward officer</text>
+<rect x="175" y="160" width="170" height="86" rx="14" fill="#ffffff" stroke="#0d6efd" stroke-width="1.8"/>
+<line x1="175" y1="182" x2="345" y2="182" stroke="#0d6efd" stroke-width="1.2"/>
+<text x="260" y="175" font-size="11.5" font-weight="700" fill="#0d6efd" text-anchor="middle">1.0</text>
+<text x="260" y="200" font-size="11.8" fill="#1c1f23" text-anchor="middle">Capture complaint (web</text>
+<text x="260" y="214" font-size="11.8" fill="#1c1f23" text-anchor="middle">/ mobile / call</text>
+<text x="260" y="228" font-size="11.8" fill="#1c1f23" text-anchor="middle">centre)</text>
+<rect x="390" y="160" width="170" height="86" rx="14" fill="#ffffff" stroke="#0d6efd" stroke-width="1.8"/>
+<line x1="390" y1="182" x2="560" y2="182" stroke="#0d6efd" stroke-width="1.2"/>
+<text x="475" y="175" font-size="11.5" font-weight="700" fill="#0d6efd" text-anchor="middle">2.0</text>
+<text x="475" y="200" font-size="11.8" fill="#1c1f23" text-anchor="middle">Classify text and</text>
+<text x="475" y="214" font-size="11.8" fill="#1c1f23" text-anchor="middle">route to a department</text>
+<rect x="610" y="160" width="170" height="86" rx="14" fill="#ffffff" stroke="#0d6efd" stroke-width="1.8"/>
+<line x1="610" y1="182" x2="780" y2="182" stroke="#0d6efd" stroke-width="1.2"/>
+<text x="695" y="175" font-size="11.5" font-weight="700" fill="#0d6efd" text-anchor="middle">3.0</text>
+<text x="695" y="200" font-size="11.8" fill="#1c1f23" text-anchor="middle">Detect duplicates and</text>
+<text x="695" y="214" font-size="11.8" fill="#1c1f23" text-anchor="middle">merge reports</text>
+<rect x="830" y="160" width="170" height="86" rx="14" fill="#ffffff" stroke="#0d6efd" stroke-width="1.8"/>
+<line x1="830" y1="182" x2="1000" y2="182" stroke="#0d6efd" stroke-width="1.2"/>
+<text x="915" y="175" font-size="11.5" font-weight="700" fill="#0d6efd" text-anchor="middle">4.0</text>
+<text x="915" y="200" font-size="11.8" fill="#1c1f23" text-anchor="middle">Score priority and set</text>
+<text x="915" y="214" font-size="11.8" fill="#1c1f23" text-anchor="middle">the SLA clock</text>
+<rect x="620" y="415" width="200" height="86" rx="14" fill="#ffffff" stroke="#0d6efd" stroke-width="1.8"/>
+<line x1="620" y1="437" x2="820" y2="437" stroke="#0d6efd" stroke-width="1.2"/>
+<text x="720" y="430" font-size="11.5" font-weight="700" fill="#0d6efd" text-anchor="middle">5.0</text>
+<text x="720" y="455" font-size="11.8" fill="#1c1f23" text-anchor="middle">Assign, resolve and</text>
+<text x="720" y="469" font-size="11.8" fill="#1c1f23" text-anchor="middle">track the complaint</text>
+<rect x="880" y="415" width="200" height="86" rx="14" fill="#ffffff" stroke="#0d6efd" stroke-width="1.8"/>
+<line x1="880" y1="437" x2="1080" y2="437" stroke="#0d6efd" stroke-width="1.2"/>
+<text x="980" y="430" font-size="11.5" font-weight="700" fill="#0d6efd" text-anchor="middle">6.0</text>
+<text x="980" y="455" font-size="11.8" fill="#1c1f23" text-anchor="middle">Dashboard, SLA reports</text>
+<text x="980" y="469" font-size="11.8" fill="#1c1f23" text-anchor="middle">and hot-spots</text>
+<rect x="175" y="305" width="300" height="42" fill="#f2f8f4" stroke="#1e7e34" stroke-width="1.5"/>
+<line x1="209" y1="305" x2="209" y2="347" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="192" y="330" font-size="12" font-weight="700" fill="#1e7e34" text-anchor="middle">D2</text>
+<text x="219" y="330" font-size="11.5" fill="#1c1f23">Departments / Categories / Wards</text>
+<rect x="560" y="305" width="340" height="42" fill="#f2f8f4" stroke="#1e7e34" stroke-width="1.5"/>
+<line x1="594" y1="305" x2="594" y2="347" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="577" y="330" font-size="12" font-weight="700" fill="#1e7e34" text-anchor="middle">D1</text>
+<text x="604" y="330" font-size="11.5" fill="#1c1f23">Complaints</text>
+<rect x="175" y="560" width="300" height="42" fill="#f2f8f4" stroke="#1e7e34" stroke-width="1.5"/>
+<line x1="209" y1="560" x2="209" y2="602" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="192" y="585" font-size="12" font-weight="700" fill="#1e7e34" text-anchor="middle">D3</text>
+<text x="219" y="585" font-size="11.5" fill="#1c1f23">Training samples</text>
+<rect x="520" y="560" width="270" height="42" fill="#f2f8f4" stroke="#1e7e34" stroke-width="1.5"/>
+<line x1="554" y1="560" x2="554" y2="602" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="537" y="585" font-size="12" font-weight="700" fill="#1e7e34" text-anchor="middle">D4</text>
+<text x="564" y="585" font-size="11.5" fill="#1c1f23">Audit trail</text>
+<rect x="840" y="560" width="300" height="42" fill="#f2f8f4" stroke="#1e7e34" stroke-width="1.5"/>
+<line x1="874" y1="560" x2="874" y2="602" stroke="#1e7e34" stroke-width="1.5"/>
+<text x="857" y="585" font-size="12" font-weight="700" fill="#1e7e34" text-anchor="middle">D5</text>
+<text x="884" y="585" font-size="11.5" fill="#1c1f23">Support and feedback</text>
+<path d="M150.0 203.0 L175.0 203.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M345.0 203.0 L390.0 203.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M560.0 203.0 L610.0 203.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M780.0 203.0 L830.0 203.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M449.5 246.0 L449.0 272.0 L361.0 272.0 L361.0 305.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M340.0 560.0 L340.0 265.0 L509.0 265.0 L509.0 246.0" fill="none" stroke="#c25e00" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrowL)"/>
+<path d="M260.0 246.0 L260.0 288.0 L608.0 288.0 L607.6 305.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M679.0 305.0 L679.0 288.0 L669.5 246.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M923.5 246.0 L924.0 288.0 L866.0 288.0 L866.0 305.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M889.5 246.0 L890.0 375.0 L720.0 375.0 L720.0 415.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M849.0 347.0 L849.0 392.0 L960.0 392.0 L960.0 415.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M1140.0 440.8 L1105.0 440.0 L1105.0 530.0 L810.0 530.0 L810.0 501.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M1080.0 462.3 L1140.0 462.3" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M620.0 440.8 L150.0 440.8" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M150.0 476.9 L620.0 476.9" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M670.0 501.0 L668.5 560.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M740.0 501.0 L740.0 552.0 L990.0 552.0 L990.0 560.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M636.0 501.0 L636.0 522.0 L250.0 522.0 L250.0 560.0" fill="none" stroke="#c25e00" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrowL)"/>
+<path d="M614.5 560.0 L614.0 545.0 L930.0 545.0 L930.0 501.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<path d="M1080.0 560.0 L1080.0 545.0 L1040.0 501.0" fill="none" stroke="#5f6368" stroke-width="1.5"  marker-end="url(#arrow)"/>
+<rect x="96.9" y="131.0" width="131.2" height="27.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="162.5" y="141.0" font-size="10.2" fill="#5f6368" text-anchor="middle">complaint text, photo,</text>
+<text x="162.5" y="152.0" font-size="10.2" fill="#5f6368" text-anchor="middle">ward, GPS</text>
+<rect x="329.9" y="131.0" width="75.2" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="367.5" y="141.0" font-size="10.2" fill="#5f6368" text-anchor="middle">cleaned text</text>
+<rect x="522.2" y="131.0" width="125.6" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="585.0" y="141.0" font-size="10.2" fill="#5f6368" text-anchor="middle">category + confidence</text>
+<rect x="745.0" y="131.0" width="120.0" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="805.0" y="141.0" font-size="10.2" fill="#5f6368" text-anchor="middle">one unique complaint</text>
+<rect x="336.6" y="252.0" width="136.8" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="405.0" y="262.0" font-size="10.2" fill="#5f6368" text-anchor="middle">category severity + SLA</text>
+<rect x="274.4" y="396.5" width="131.2" height="39.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="340.0" y="406.5" font-size="10.2" fill="#c25e00" text-anchor="middle">labelled samples: seed</text>
+<text x="340.0" y="417.5" font-size="10.2" fill="#c25e00" text-anchor="middle">corpus + officer</text>
+<text x="340.0" y="428.5" font-size="10.2" fill="#c25e00" text-anchor="middle">corrections</text>
+<rect x="374.0" y="271.0" width="120.0" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="434.0" y="281.0" font-size="10.2" fill="#5f6368" text-anchor="middle">new complaint record</text>
+<rect x="607.5" y="245.0" width="131.2" height="27.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="673.1" y="255.0" font-size="10.2" fill="#5f6368" text-anchor="middle">open complaints of the</text>
+<text x="673.1" y="266.0" font-size="10.2" fill="#5f6368" text-anchor="middle">last 30 days</text>
+<rect x="821.0" y="271.0" width="148.0" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="895.0" y="281.0" font-size="10.2" fill="#5f6368" text-anchor="middle">priority, score, due date</text>
+<rect x="753.4" y="358.0" width="103.2" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="805.0" y="368.0" font-size="10.2" fill="#5f6368" text-anchor="middle">ranked work queue</text>
+<rect x="844.5" y="375.0" width="120.0" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="904.5" y="385.0" font-size="10.2" fill="#5f6368" text-anchor="middle">counts and SLA state</text>
+<rect x="883.5" y="512.0" width="148.0" height="27.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="957.5" y="522.0" font-size="10.2" fill="#5f6368" text-anchor="middle">assign / update / resolve</text>
+<text x="957.5" y="533.0" font-size="10.2" fill="#5f6368" text-anchor="middle">/ merge</text>
+<rect x="1038.8" y="394.3" width="142.4" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="1110.0" y="404.3" font-size="10.2" fill="#5f6368" text-anchor="middle">KPIs, charts, SLA report</text>
+<rect x="450.6" y="422.8" width="108.8" height="27.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="505.0" y="432.8" font-size="10.2" fill="#5f6368" text-anchor="middle">status updates and</text>
+<text x="505.0" y="443.8" font-size="10.2" fill="#5f6368" text-anchor="middle">resolution note</text>
+<rect x="439.4" y="481.9" width="131.2" height="27.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="505.0" y="491.9" font-size="10.2" fill="#5f6368" text-anchor="middle">rating and 'I have the</text>
+<text x="505.0" y="502.9" font-size="10.2" fill="#5f6368" text-anchor="middle">same problem'</text>
+<rect x="603.6" y="512.5" width="131.2" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="669.2" y="522.5" font-size="10.2" fill="#5f6368" text-anchor="middle">every action is logged</text>
+<rect x="785.0" y="535.0" width="120.0" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="845.0" y="545.0" font-size="10.2" fill="#5f6368" text-anchor="middle">support and feedback</text>
+<rect x="366.2" y="505.0" width="153.6" height="27.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="443.0" y="515.0" font-size="10.2" fill="#c25e00" text-anchor="middle">officer correction becomes</text>
+<text x="443.0" y="526.0" font-size="10.2" fill="#c25e00" text-anchor="middle">a new training sample</text>
+<rect x="653.7" y="529.0" width="97.6" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="702.5" y="539.0" font-size="10.2" fill="#5f6368" text-anchor="middle">resolution times</text>
+<rect x="1014.0" y="481.0" width="92.0" height="15.0" rx="3" fill="#ffffff" fill-opacity="0.95"/>
+<text x="1060.0" y="491.0" font-size="10.2" fill="#5f6368" text-anchor="middle">citizen ratings</text>
+<rect x="20" y="640" width="1260" height="46" rx="6" fill="#f8f9fb" stroke="#d6dade"/>
+<text x="34" y="667" font-size="11.5" fill="#3c4043">Level-1 DFD &#160;&#8226;&#160; rectangle = external entity &#160;&#8226;&#160; rounded box = process &#160;&#8226;&#160; open box = data store &#160;&#8226;&#160; <tspan fill="#c25e00">the dashed orange path is the learning loop: an officer's correction is stored and the classifier is retrained from it</tspan></text>
+</svg>

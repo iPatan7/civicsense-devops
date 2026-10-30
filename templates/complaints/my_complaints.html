@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}My complaints{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 mb-0">My complaints</h1>
+  <a class="btn btn-primary" href="{% url 'complaints:file_complaint' %}">
+    <i class="bi bi-plus-lg"></i> New complaint</a>
+</div>
+
+<form class="row g-2 mb-3" method="get">
+  <div class="col-auto">
+    <select name="status" class="form-select" onchange="this.form.submit()">
+      <option value="">All statuses</option>
+      <option value="open" {% if status == 'open' %}selected{% endif %}>Open only</option>
+      {% for value, label in statuses %}
+        <option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</form>
+
+<div class="table-responsive">
+  <table class="table align-middle">
+    <thead><tr><th>Complaint</th><th>Category</th><th>Status</th><th>Due</th><th></th></tr></thead>
+    <tbody>
+      {% for complaint in page_obj %}
+        <tr>
+          <td>
+            <a class="fw-semibold" href="{{ complaint.get_absolute_url }}">{{ complaint.title }}</a>
+            <div class="small text-muted">{{ complaint.tracking_id }} &middot;
+              {{ complaint.created_at|date:"d M Y" }}</div>
+          </td>
+          <td class="small">{{ complaint.category.name|default:"-" }}<br>
+            <span class="text-muted">{{ complaint.department.name|default:"" }}</span></td>
+          <td>{% include "_badges.html" %}</td>
+          <td class="small">{{ complaint.due_at|date:"d M, h:i A"|default:"-" }}</td>
+          <td class="text-end"><a class="btn btn-sm btn-outline-secondary"
+             href="{{ complaint.get_absolute_url }}">Open</a></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5" class="text-center text-muted py-4">
+          You have not filed any complaint yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% include "_pagination.html" %}
+
+{% if supported %}
+  <h2 class="h5 mt-5">Complaints you supported</h2>
+  <div class="list-group">
+    {% for complaint in supported %}
+      <a class="list-group-item list-group-item-action d-flex justify-content-between"
+         href="{{ complaint.get_absolute_url }}">
+        <span>{{ complaint.title }}</span>
+        <span class="badge chip status-{{ complaint.status|lower }}">{{ complaint.get_status_display }}</span>
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}
