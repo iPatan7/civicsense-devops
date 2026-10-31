@@ -41,9 +41,10 @@ static() {
 login_page() { get 200 /accounts/login/ && has csrfmiddlewaretoken; }
 login() {
   token=$(awk '$6 == "csrftoken" { print $7 }' "$JAR")
-  got=$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' -b "$JAR" -c "$JAR" \
+  # the password goes to curl on stdin, not on its command line
+  got=$(printf '%s' "$SMOKE_PASSWORD" | curl -s -o /dev/null -w '%{http_code} %{redirect_url}' -b "$JAR" -c "$JAR" \
     -H "Referer: $URL/accounts/login/" -H "Origin: $URL" \
-    --data-urlencode "csrfmiddlewaretoken=$token" -d "username=$SMOKE_USER" --data-urlencode "password=$SMOKE_PASSWORD" \
+    --data-urlencode "csrfmiddlewaretoken=$token" -d "username=$SMOKE_USER" --data-urlencode "password@-" \
     "$URL/accounts/login/")
   case "$got" in 302*) ;; *) echo "login returned $got (expected a 302 redirect)"; return 1 ;; esac
 }

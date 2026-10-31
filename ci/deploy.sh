@@ -104,7 +104,8 @@ log "slot $NEW serves release $RELEASE"
 
 # The smoke test logs in with its own citizen account, whose password exists only
 # in this environment's secrets file (no shared or published password).
-dc exec -T -e SMOKE_PASSWORD="$SMOKE_PASSWORD" "web-$NEW" python manage.py shell -c '
+export SMOKE_PASSWORD             # passed by name, so the value never appears in a process list
+dc exec -T -e SMOKE_PASSWORD "web-$NEW" python manage.py shell -c '
 import os
 from django.contrib.auth.models import User
 user, _ = User.objects.get_or_create(username="smoke-test", defaults={"email": "smoke@localhost"})
@@ -121,7 +122,7 @@ fi
 t=$(now); switch_to "$NEW" || true
 log "nginx switched ${LIVE:-none} -> $NEW in $(since "$t") s"
 
-if ! SMOKE_USER=smoke-test SMOKE_PASSWORD="$SMOKE_PASSWORD" "$ROOT/ci/smoke.sh" "http://localhost:$PUBLIC_PORT" "$RELEASE"; then
+if ! SMOKE_USER=smoke-test "$ROOT/ci/smoke.sh" "http://localhost:$PUBLIC_PORT" "$RELEASE"; then
   if [ -n "$LIVE" ] && healthy "$LIVE"; then
     t=$(now); switch_to "$LIVE"
     log "smoke test failed: rolled back to slot $LIVE ($(cat "$STATE_DIR/slot-$LIVE")) in $(since "$t") s"
