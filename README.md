@@ -34,6 +34,21 @@ It is my project for **DevOps Process Automation Lab (25CAP-732)**, MCA Cloud Co
 | `.github/workflows/ci.yml` | GitHub Actions: tests on a MySQL service container, then an image build and smoke test. |
 | `Dockerfile`, `docker/` | The two-stage production image and its entrypoint. |
 
+## What it did on 31 October 2026
+
+Eleven pipeline runs, all for real commits (details in the report):
+
+| | |
+|---|---|
+| Normal release, push to production | 209–260 s, no manual step |
+| Whole pipeline | 167–223 s; tests on MySQL are about three quarters of it |
+| Tests | 41/41 inside the production image on MySQL 8.4, 82 % statement coverage |
+| Requests during releases | 1 of 4,616 failed before the static-files fix, 0 of 23,472 after it |
+| Faulty production config (build #7) | caught by the smoke test's login, rolled back in 0.4 s |
+| Feature branch, test first | red in Jenkins and on the pull request, green after the change, then merged |
+
+The pipeline also found its own bugs: scripts that lost their executable bit on an NTFS drive, `collectstatic --clear` deleting the live slot's stylesheet during a release, an nginx reload that returns before it takes effect, and a footer that was in the page but unreadable.
+
 ## Running it
 
 You need Docker with the Compose plugin and Java 21+ for Jenkins.
