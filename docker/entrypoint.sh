@@ -12,7 +12,10 @@ if [ "${DB_ENGINE}" = "mysql" ]; then
 fi
 
 python manage.py migrate --no-input
-python manage.py collectstatic --no-input --clear >/dev/null
+# No --clear: during a blue-green release both slots share the static volume, and
+# clearing it would delete the files the live slot is still serving. The file
+# names carry a content hash, so old and new versions live side by side.
+python manage.py collectstatic --no-input >/dev/null
 
 if [ "${SEED_DEMO_DATA}" = "1" ]; then
   echo "Seeding demonstration data ..."
