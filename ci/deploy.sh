@@ -27,8 +27,10 @@ if [ ! -f "$STATE_DIR/secrets.env" ]; then
     echo "DJANGO_SECRET_KEY=$(openssl rand -hex 32)"
     echo "DB_PASSWORD=$(openssl rand -hex 16)"
     echo "DB_ROOT_PASSWORD=$(openssl rand -hex 16)"
+    echo "SMOKE_PASSWORD=$(openssl rand -hex 12)"
   } > "$STATE_DIR/secrets.env")
 fi
+. "$STATE_DIR/secrets.env"
 
 dc() { docker compose -p "$PROJECT" -f "$ROOT/deploy/compose.yml" \
          --env-file "$CONF" --env-file "$STATE_DIR/secrets.env" "$@"; }
@@ -100,16 +102,26 @@ dc exec -T "web-$NEW" curl -fsS -H "Host: localhost" http://localhost:8000/healt
   || { log "slot $NEW answers wrongly; live slot ${LIVE:-none} untouched"; record "FAILED check $IMAGE in $NEW"; exit 1; }
 log "slot $NEW serves release $RELEASE"
 
-# First deployment of an environment: load the demonstration data once.
-if [ "$(dc exec -T "web-$NEW" python manage.py shell -c 'from complaints.models import Complaint; print(Complaint.objects.count())' 2>/dev/null | tail -1)" = 0 ]; then
+# The smoke test logs in with its own citizen account, whose password exists only
+# in this environment's secrets file (no shared or published password).
+dc exec -T -e SMOKE_PASSWORD="$SMOKE_PASSWORD" "web-$NEW" python manage.py shell -c '
+import os
+from django.contrib.auth.models import User
+user, _ = User.objects.get_or_create(username="smoke-test", defaults={"email": "smoke@localhost"})
+user.set_password(os.environ["SMOKE_PASSWORD"])
+user.save()' >/dev/null
+
+# Demonstration data (with its well-known demo passwords) only where the
+# environment file asks for it, and only into an empty database: never reset.
+if [ "${LOAD_DEMO_DATA:-0}" = 1 ] && [ "$(dc exec -T "web-$NEW" python manage.py shell -c 'from complaints.models import Complaint; print(Complaint.objects.count())' 2>/dev/null | tail -1)" = 0 ]; then
   log "empty database: loading the demonstration data"
-  dc exec -T "web-$NEW" python manage.py seed_demo --reset >/dev/null
+  dc exec -T "web-$NEW" python manage.py seed_demo >/dev/null
 fi
 
 t=$(now); switch_to "$NEW" || true
 log "nginx switched ${LIVE:-none} -> $NEW in $(since "$t") s"
 
-if ! "$ROOT/ci/smoke.sh" "http://localhost:$PUBLIC_PORT" "$RELEASE"; then
+if ! SMOKE_USER=smoke-test SMOKE_PASSWORD="$SMOKE_PASSWORD" "$ROOT/ci/smoke.sh" "http://localhost:$PUBLIC_PORT" "$RELEASE"; then
   if [ -n "$LIVE" ] && healthy "$LIVE"; then
     t=$(now); switch_to "$LIVE"
     log "smoke test failed: rolled back to slot $LIVE ($(cat "$STATE_DIR/slot-$LIVE")) in $(since "$t") s"

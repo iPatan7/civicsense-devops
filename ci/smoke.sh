@@ -8,6 +8,7 @@
 set -u
 URL=${1%/}
 EXPECT=${2:-}
+SMOKE_USER=${SMOKE_USER:-citizen1} SMOKE_PASSWORD=${SMOKE_PASSWORD:-civic123}   # demo account by default
 JAR=$(mktemp)
 trap 'rm -f "$JAR" "$JAR.body"' EXIT
 
@@ -42,7 +43,7 @@ login() {
   token=$(awk '$6 == "csrftoken" { print $7 }' "$JAR")
   got=$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' -b "$JAR" -c "$JAR" \
     -H "Referer: $URL/accounts/login/" -H "Origin: $URL" \
-    --data-urlencode "csrfmiddlewaretoken=$token" -d username=citizen1 -d password=civic123 \
+    --data-urlencode "csrfmiddlewaretoken=$token" -d "username=$SMOKE_USER" --data-urlencode "password=$SMOKE_PASSWORD" \
     "$URL/accounts/login/")
   case "$got" in 302*) ;; *) echo "login returned $got (expected a 302 redirect)"; return 1 ;; esac
 }
