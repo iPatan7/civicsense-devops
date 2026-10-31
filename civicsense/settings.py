@@ -35,6 +35,13 @@ CSRF_TRUSTED_ORIGINS = [
     o for o in env("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o
 ]
 
+# Set by the deployment scripts: which build is running and in which blue-green slot.
+CIVIC_RELEASE = env("CIVIC_RELEASE", "dev")
+CIVIC_SLOT = env("CIVIC_SLOT", "-")
+
+# Where the CI pipeline's XML test runner writes its JUnit reports.
+TEST_OUTPUT_DIR = env("TEST_OUTPUT_DIR", "reports/junit")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

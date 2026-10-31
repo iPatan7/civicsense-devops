@@ -11,7 +11,7 @@ Run with:  python manage.py test
 from datetime import timedelta
 
 from django.contrib.auth.models import User
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
@@ -388,6 +388,12 @@ class PageTests(CivicTestCase):
                     "/healthz"):
             with self.subTest(url=url):
                 self.assertEqual(self.client.get(url).status_code, 200)
+
+    @override_settings(CIVIC_RELEASE="3f2a91c0", CIVIC_SLOT="green")
+    def test_health_endpoint_reports_the_release(self):
+        # The deployment smoke test relies on this to see which build is live.
+        self.assertEqual(self.client.get("/healthz").json(),
+                         {"status": "ok", "release": "3f2a91c0", "slot": "green"})
 
     def test_filing_requires_login(self):
         response = self.client.get(reverse("complaints:file_complaint"))

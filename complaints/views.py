@@ -1,6 +1,7 @@
 """Citizen facing views: file, track, support and follow a complaint."""
 import json
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -16,8 +17,14 @@ from .models import (Category, Complaint, Department, OPEN_STATUSES, Status,
 
 
 def healthz(request):
-    """Liveness probe for Docker / Kubernetes."""
-    return JsonResponse({"status": "ok"})
+    """Liveness probe for Docker / Kubernetes.
+
+    It also says which release is answering (set by the deployment), so a smoke
+    test can check that a blue-green switch really put the new version live.
+    """
+    return JsonResponse({"status": "ok",
+                         "release": settings.CIVIC_RELEASE,
+                         "slot": settings.CIVIC_SLOT})
 
 
 def home(request):
