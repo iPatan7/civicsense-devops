@@ -40,10 +40,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y default-libmysqlclient-dev pkg-config
           pip install -r requirements.txt
-          pip install flake8
+          pip install flake8==7.3.0
 
-      - name: Lint (style only, no failing build on warnings)
-        run: flake8 --max-line-length=100 --exclude=migrations . || true
+      # Same rule as the Jenkins pipeline (ci/lint.sh): syntax errors and
+      # undefined names fail the check, style warnings are only reported.
+      - name: Lint
+        run: |
+          flake8 --select=E9,F63,F7,F82 --exclude=migrations --show-source .
+          flake8 --max-line-length=100 --exclude=migrations --exit-zero --count .
 
       - name: Django system checks
         env:
