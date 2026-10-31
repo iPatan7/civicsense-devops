@@ -395,6 +395,12 @@ class PageTests(CivicTestCase):
         self.assertEqual(self.client.get("/healthz").json(),
                          {"status": "ok", "release": "3f2a91c0", "slot": "green"})
 
+    @override_settings(CIVIC_RELEASE="3f2a91c0", CIVIC_SLOT="green")
+    def test_footer_shows_the_running_release(self):
+        # Support staff can tell from any page which build a citizen is using.
+        response = self.client.get(reverse("complaints:home"))
+        self.assertContains(response, "Release 3f2a91c0 (green)")
+
     def test_filing_requires_login(self):
         response = self.client.get(reverse("complaints:file_complaint"))
         self.assertEqual(response.status_code, 302)
