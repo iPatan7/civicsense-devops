@@ -1,0 +1,23 @@
+# Plugins of the CivicSense Jenkins controller. Only the top-level plugins are
+# listed; the plugin installation manager resolves their dependencies.
+#
+# configuration-as-code  the whole controller is configured from casc.yaml
+# job-dsl                the pipeline job itself is created from code
+# workflow-aggregator    declarative pipelines (Jenkinsfile)
+# workflow-multibranch   one pipeline per Git branch
+# git                    Git checkout and branch discovery
+# junit                  test result reports and trend
+# pipeline-stage-view    stage timings on the job page (and the wfapi REST API)
+# pipeline-graph-view    graph of the stages of each run
+# timestamper            time stamps in the console log
+# ws-cleanup             workspace clean-up
+configuration-as-code
+job-dsl
+workflow-aggregator
+workflow-multibranch
+git
+junit
+pipeline-stage-view
+pipeline-graph-view
+timestamper
+ws-cleanup

@@ -1,0 +1,61 @@
+# Jenkins Configuration as Code for the CivicSense controller.
+#
+# Nothing is configured by clicking in the web interface: security, the system
+# settings and the pipeline job all come from this file, so the controller can be
+# thrown away and rebuilt identically with jenkins/run-jenkins.sh.
+jenkins:
+  systemMessage: "CivicSense CI/CD. This controller is configured from jenkins/casc.yaml."
+  numExecutors: 2
+  mode: NORMAL
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          name: "CI administrator"
+          password: "${JENKINS_ADMIN_PASSWORD}"   # taken from the environment, never stored in Git
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: true                    # dashboards are readable, changes need a login
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  markupFormatter: "plainText"
+
+unclassified:
+  location:
+    url: "http://localhost:8090/"
+  timestamper:
+    allPipelines: true
+
+jobs:
+  - script: |
+      multibranchPipelineJob('civicsense') {
+        displayName('CivicSense')
+        description('Builds and tests every branch of civicsense-devops. Only main is deployed: staging first, then production (blue-green).')
+        branchSources {
+          branchSource {
+            source {
+              git {
+                id('civicsense-devops')
+                remote('https://github.com/iPatan7/civicsense-devops.git')
+                traits {
+                  gitBranchDiscovery()
+                }
+              }
+            }
+          }
+        }
+        // There is no public address for a GitHub webhook to reach, so the
+        // repository is scanned for new commits every minute instead.
+        triggers {
+          periodicFolderTrigger {
+            interval('1m')
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(5)
+          }
+        }
+      }
