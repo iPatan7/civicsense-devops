@@ -17,9 +17,6 @@ jenkins:
   authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: true                    # dashboards are readable, changes need a login
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: true
   markupFormatter: "plainText"
 
 unclassified:
