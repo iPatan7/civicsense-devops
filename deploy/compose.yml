@@ -1,0 +1,88 @@
+# One CivicSense environment (staging or production), deployed blue-green.
+#
+# Two web slots run the application side by side: one is live, the other is idle
+# or holds the previous release. nginx sends traffic to whichever slot is named in
+# $STATE_DIR/nginx/live.conf; ci/deploy.sh rewrites that file and reloads nginx.
+#
+# Used only through ci/deploy.sh, which supplies the project name, the environment
+# file (deploy/env/<env>.env), the secrets file and the image of each slot.
+
+x-web: &web
+  restart: unless-stopped
+  command: ["gunicorn", "civicsense.wsgi:application", "--bind", "0.0.0.0:8000",
+            "--workers", "${GUNICORN_WORKERS:-2}", "--timeout", "60", "--access-logfile", "-"]
+  volumes:
+    - static_files:/app/staticfiles
+    - media_files:/app/media
+  depends_on:
+    db:
+      condition: service_healthy
+  healthcheck:
+    test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
+    interval: 5s
+    timeout: 3s
+    retries: 3
+    start_period: 120s
+
+x-web-env: &web-env
+  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+  DJANGO_DEBUG: "0"
+  DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+  DJANGO_CSRF_TRUSTED_ORIGINS: ${DJANGO_CSRF_TRUSTED_ORIGINS}
+  DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL:-INFO}
+  DB_ENGINE: mysql
+  DB_NAME: civicsense
+  DB_USER: civic
+  DB_PASSWORD: ${DB_PASSWORD}
+  DB_HOST: db
+  DB_PORT: "3306"
+  SEED_DEMO_DATA: "0"
+
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: civicsense
+      MYSQL_USER: civic
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  web-blue:
+    <<: *web
+    image: ${WEB_BLUE_IMAGE:-civicsense:none}
+    environment:
+      <<: *web-env
+      CIVIC_RELEASE: ${WEB_BLUE_RELEASE:-none}
+      CIVIC_SLOT: blue
+
+  web-green:
+    <<: *web
+    image: ${WEB_GREEN_IMAGE:-civicsense:none}
+    environment:
+      <<: *web-env
+      CIVIC_RELEASE: ${WEB_GREEN_RELEASE:-none}
+      CIVIC_SLOT: green
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "${PUBLIC_PORT}:80"
+    volumes:
+      - ${STATE_DIR}/nginx:/etc/nginx/conf.d:ro      # default.conf + live.conf
+      - static_files:/app/staticfiles:ro
+      - media_files:/app/media:ro
+
+volumes:
+  db_data:
+  static_files:
+  media_files:

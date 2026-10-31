@@ -1,0 +1,6 @@
+# Static-analysis tools of the pipeline, in one small image with pinned versions,
+# so every build uses the same tools and the Jenkins agent needs only Docker.
+FROM python:3.12-slim
+RUN pip install --no-cache-dir --disable-pip-version-check \
+        flake8==7.3.0 bandit==1.8.6 pip-audit==2.9.0
+WORKDIR /src
