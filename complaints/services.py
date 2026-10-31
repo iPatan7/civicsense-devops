@@ -12,7 +12,7 @@ JSON API and the management commands.
     add_support()         "me too"         -> priority recomputed upwards
 """
 import logging
-import random
+import secrets
 import string
 from datetime import timedelta
 
@@ -35,11 +35,15 @@ CONFIG = getattr(settings, "CIVIC", {})
 # Helpers
 # --------------------------------------------------------------------------
 def generate_tracking_id():
-    """CIV-2026-7KQ4X2 - short enough to read out on the phone."""
+    """CIV-2026-7KQ4X2 - short enough to read out on the phone.
+
+    Anyone with the id can open the complaint, so it must not be guessable:
+    the suffix comes from the secrets module, not from random.
+    """
     year = timezone.now().year
     alphabet = string.ascii_uppercase + string.digits
     for _ in range(20):
-        suffix = "".join(random.choices(alphabet, k=6))
+        suffix = "".join(secrets.choice(alphabet) for _ in range(6))
         tracking_id = "CIV-%d-%s" % (year, suffix)
         if not Complaint.objects.filter(tracking_id=tracking_id).exists():
             return tracking_id
